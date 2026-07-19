@@ -5,6 +5,7 @@ const { verifyToken, verifyAdmin } = require('../middleware/auth');
 
 // Fungsi cek bentrok jadwal (inti dari algoritma-nya)
 async function cekBentrokJadwal(lapangan_id, tanggal_main, jam_mulai, jam_selesai, excludeId = null) {
+  console.time('cekBentrok');
   let query = `
     SELECT * FROM reservasi
     WHERE lapangan_id = ? AND tanggal_main = ?
@@ -18,6 +19,7 @@ async function cekBentrokJadwal(lapangan_id, tanggal_main, jam_mulai, jam_selesa
   }
 
   const [rows] = await pool.query(query, params);
+  console.timeEnd('cekBentrok');
   return rows.length > 0;
 }
 

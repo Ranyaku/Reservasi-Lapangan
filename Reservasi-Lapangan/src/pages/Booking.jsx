@@ -25,7 +25,7 @@ export default function Booking() {
 
 useEffect(() => {
   if (user.role === 'admin') {
-    api.get('/users/pelanggan').then((res) => setPelangganList(res.data));
+    api.get('/lapangan/pelanggan').then((res) => setPelangganList(res.data));
   }
 }, []);
 

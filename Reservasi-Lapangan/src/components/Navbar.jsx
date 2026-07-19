@@ -12,7 +12,7 @@ export default function Navbar() {
 
   return (
     <nav className="w-full h-16 bg-gray-900 flex items-center justify-between px-6">
-      <h1 className="text-white font-bold text-lg">Sport Center</h1>
+      <h1 className="text-white font-bold text-lg">SM Sport Center</h1>
       <div className="flex items-center gap-4">
         <span className="text-white text-sm">Halo, {user.nama_lengkap}</span>
         <button
@@ -25,3 +25,4 @@ export default function Navbar() {
     </nav>
   );
 }
+
