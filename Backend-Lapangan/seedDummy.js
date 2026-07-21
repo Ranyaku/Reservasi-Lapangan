@@ -1,7 +1,4 @@
-// Cara pakai: taro file ini di folder backend/, lalu jalankan:
 //   node seedDummy.js 3000
-// Angka 3000 itu jumlah baris dummy yang mau dibikin (boleh diganti).
-
 const pool = require('./config/db');
 
 const JUMLAH = Number(process.argv[2]) || 3000;

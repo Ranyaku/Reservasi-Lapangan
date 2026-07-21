@@ -13,7 +13,6 @@ router.get('/', verifyToken, async (req, res) => {
   }
 });
 
-// taro di lapanganRoutes.js atau bikin userRoutes.js baru
 router.get('/pelanggan', verifyToken, verifyAdmin, async (req, res) => {
   const [rows] = await pool.query("SELECT id, nama_lengkap FROM users WHERE role = 'pelanggan'");
   res.json(rows);
@@ -22,7 +21,7 @@ router.get('/pelanggan', verifyToken, verifyAdmin, async (req, res) => {
 // GET ketersediaan lapangan per tanggal (buat grid jadwal)
 router.get('/ketersediaan', verifyToken, async (req, res) => {
   try {
-    const { tanggal } = req.query; // format: YYYY-MM-DD
+    const { tanggal } = req.query; 
 
     if (!tanggal) {
       return res.status(400).json({ error: 'Parameter tanggal wajib diisi' });

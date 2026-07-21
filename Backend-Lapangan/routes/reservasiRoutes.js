@@ -5,7 +5,6 @@ const { verifyToken, verifyAdmin } = require('../middleware/auth');
 
 // Fungsi cek bentrok jadwal (inti dari algoritma-nya)
 async function cekBentrokJadwal(lapangan_id, tanggal_main, jam_mulai, jam_selesai, excludeId = null) {
-  console.time('cekBentrok');
   let query = `
     SELECT * FROM reservasi
     WHERE lapangan_id = ? AND tanggal_main = ?
@@ -19,7 +18,6 @@ async function cekBentrokJadwal(lapangan_id, tanggal_main, jam_mulai, jam_selesa
   }
 
   const [rows] = await pool.query(query, params);
-  console.timeEnd('cekBentrok');
   return rows.length > 0;
 }
 
@@ -43,9 +41,6 @@ router.get('/saya', verifyToken, async (req, res) => {
 router.post('/', verifyToken, async (req, res) => {
   try {
     const { lapangan_id, tanggal_main, jam_mulai, jam_selesai, user_id } = req.body;
-
-    // Kalau admin yang request DAN dia kirim user_id spesifik, pakai itu.
-    // Kalau bukan admin (atau admin gak kirim user_id), pakai id dari token yang login.
     const targetUserId = (req.user.role === 'admin' && user_id) ? user_id : req.user.id;
 
     if (!lapangan_id || !tanggal_main || !jam_mulai || !jam_selesai) {
@@ -108,7 +103,7 @@ router.post('/', verifyToken, async (req, res) => {
   }
 });
 
-// DELETE reservasi (cek kepemilikan dulu — mencegah bug IDOR kayak di laporan temen lo)
+// DELETE reservasi
 router.delete('/:id', verifyToken, async (req, res) => {
   try {
     const [rows] = await pool.query('SELECT user_id FROM reservasi WHERE id = ?', [req.params.id]);
@@ -144,7 +139,7 @@ router.get('/all', verifyToken, verifyAdmin, async (req, res) => {
   }
 });
 
-// ADMIN — GET laporan penggunaan lapangan (JOIN + agregasi, sama kayak di laporan temen lo)
+// ADMIN — GET laporan penggunaan lapangan
 router.get('/laporan', verifyToken, verifyAdmin, async (req, res) => {
   try {
     const [rows] = await pool.query(

@@ -29,9 +29,6 @@ useEffect(() => {
   }
 }, []);
 
-// di handleSubmit, tambahin ke body:
-// user_id: user.role === 'admin' ? selectedPelanggan : undefined
-
   // Ambil daftar lapangan sekali di awal
   useEffect(() => {
     api.get('/lapangan').then((res) => setLapanganList(res.data));
